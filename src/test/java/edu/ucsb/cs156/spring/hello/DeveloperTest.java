@@ -1,6 +1,7 @@
 package edu.ucsb.cs156.spring.hello;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.lang.reflect.Constructor;
@@ -36,7 +37,7 @@ public class DeveloperTest {
         assertEquals("s26-02", t.getName());
     }
 
-        @Test
+    @Test
     public void getTeam_returns_team_with_correct_members() {
         Team  t = Developer.getTeam();
         assertTrue(t.getMembers().contains("Andrew"),"Team should contain Andrew");
@@ -47,4 +48,55 @@ public class DeveloperTest {
         assertTrue(t.getMembers().contains("David"),"Team should contain David");
     }
 
+    @Test
+    public void equals_returns_true_for_same_object() {
+        Team t = new Team("test-team");
+        assertTrue(t.equals(t));
+    }
+
+    @Test
+    public void equals_returns_false_for_different_object() {
+        Team t1 = new Team("test-team");
+        Team t2 = new Team("test-team");
+        assertTrue(t1.equals(t2));
+    }
+
+    @Test
+    public void equals_returns_true_when_fields_match() {
+        Team t1 = new Team("s26-00");
+        t1.addMember("Alice");
+        Team t2 = new Team("s26-00");
+        t2.addMember("Alice");
+        
+        assertTrue(t1.equals(t2));
+    }
+
+    @Test
+    public void equals_returns_false_when_names_differ() {
+        Team t1 = new Team("s26-00");
+        t1.addMember("Alice");
+        Team t2 = new Team("s26-01");
+        t2.addMember("Alice");
+
+        assertFalse(t1.equals(t2));
+    }
+
+    @Test
+    public void equals_returns_false_when_members_differ() {
+        Team t1 = new Team("s26-00");
+        t1.addMember("Alice");
+        Team t2 = new Team("s26-00");
+        t2.addMember("Bob");
+        
+        assertFalse(t1.equals(t2));
+    }
+
+    @Test
+    public void hashCode_returns_correct_value() {
+        Team t = new Team("s26-00");
+        t.addMember("Alice");
+        int expectedResult = -942168065; 
+        
+        assertEquals(expectedResult, t.hashCode());
+    }
 }
