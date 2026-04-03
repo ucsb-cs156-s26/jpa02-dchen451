@@ -92,11 +92,34 @@ public class DeveloperTest {
     }
 
     @Test
+    public void equals_returns_false_for_non_team_object() {
+        Team t = new Team("s26-00");
+        assertFalse(t.equals("not a team"));
+    }
+
+    @Test
     public void hashCode_returns_correct_value() {
         Team t = new Team("s26-00");
         t.addMember("Alice");
         int expectedResult = -942168065; 
         
         assertEquals(expectedResult, t.hashCode());
+    }
+
+    @Test
+    public void toString_returns_correct_format() {
+        Team t = new Team("s26-00");
+        t.addMember("Alice");
+        String expected = "Team(name=s26-00, members=[Alice])";
+        
+        assertEquals(expected, t.toString());
+    }
+
+    @Test
+    public void toString_returns_correct_format_empty_members() {
+        Team t = new Team("s26-00");
+        String expected = "Team(name=s26-00, members=[])";
+        
+        assertEquals(expected, t.toString());
     }
 }
